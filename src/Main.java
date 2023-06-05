@@ -1,21 +1,38 @@
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class Main {
+    private static final String[] RESOLUTIONS = {"800x600", "1280x720", "1920x1080"};
+
     public static void main(String[] args) {
-        int firstAnswer = JOptionPane.showConfirmDialog(null, "Вы любите программирование?", "Вопрос 1", JOptionPane.YES_NO_OPTION);
-        int secondAnswer = JOptionPane.showConfirmDialog(null, "Вы готовы изучать новые технологии?", "Вопрос 2", JOptionPane.YES_NO_OPTION);
+        JFrame resolutionDialog = new JFrame("Выбор разрешения");
+        resolutionDialog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        resolutionDialog.setSize(300, 150);
+        resolutionDialog.setLocationRelativeTo(null);
 
-        String result;
-        if (firstAnswer == JOptionPane.YES_OPTION && secondAnswer == JOptionPane.YES_OPTION) {
-            result = "Отлично, продолжайте развиваться!";
-        } else if (firstAnswer == JOptionPane.YES_OPTION && secondAnswer == JOptionPane.NO_OPTION) {
-            result = "Вы любите программирование, но не готовы изучать новые технологии.";
-        } else if (firstAnswer == JOptionPane.NO_OPTION && secondAnswer == JOptionPane.YES_OPTION) {
-            result = "Вы не любите программирование, но готовы изучать новые технологии.";
-        } else {
-            result = "Программирование и новые технологии не для вас.";
-        }
+        JComboBox<String> resolutionComboBox = new JComboBox<>(RESOLUTIONS);
+        resolutionComboBox.setSelectedIndex(0);
 
-        JOptionPane.showMessageDialog(null, result, "Результат", JOptionPane.INFORMATION_MESSAGE);
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> {
+            String selectedResolution = (String) resolutionComboBox.getSelectedItem();
+            String[] dimensions = selectedResolution.split("x");
+            int width = Integer.parseInt(dimensions[0]);
+            int height = Integer.parseInt(dimensions[1]);
+
+            JFrame frame = new JFrame("Окно с выбранным разрешением");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(width, height);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+            resolutionDialog.dispose();
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(resolutionComboBox);
+        panel.add(okButton);
+        resolutionDialog.getContentPane().add(panel);
+
+        resolutionDialog.setVisible(true);
     }
 }
