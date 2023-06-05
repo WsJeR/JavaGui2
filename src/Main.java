@@ -9,16 +9,28 @@ public class Main extends JDialog {
             @Override
             public void run() {
                 // Создаем окно
-                JFrame frame = new JFrame("Выбор количества книг");
+                JFrame frame = new JFrame("Выбор цвета");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(300, 200);
 
                 // Создаем надпись "Ответ"
                 JLabel answerLabel = new JLabel("Ответ:");
 
-                // Создаем элемент JSpinner для выбора количества книг
-                SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
-                JSpinner spinner = new JSpinner(spinnerModel);
+                // Создаем выпадающий список с названиями любимых цветов
+                String[] colors = {"Красный", "Зеленый", "Синий"};
+                JComboBox<String> colorComboBox = new JComboBox<>(colors);
+
+                // Создаем чекбокс и текстовое поле для ввода своего цвета
+                JCheckBox customColorCheckBox = new JCheckBox("Свой цвет:");
+                JTextField customColorTextField = new JTextField(10);
+                customColorTextField.setEnabled(false);
+
+                // Обработчик события изменения состояния чекбокса
+                customColorCheckBox.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        customColorTextField.setEnabled(customColorCheckBox.isSelected());
+                    }
+                });
 
                 // Создаем кнопку "Ответить"
                 JButton answerButton = new JButton("Ответить");
@@ -26,14 +38,21 @@ public class Main extends JDialog {
                 // Обработчик события нажатия на кнопку "Ответить"
                 answerButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        int bookCount = (int) spinner.getValue();
-                        answerLabel.setText("Ответ: " + bookCount);
+                        String selectedColor;
+                        if (customColorCheckBox.isSelected()) {
+                            selectedColor = customColorTextField.getText();
+                        } else {
+                            selectedColor = (String) colorComboBox.getSelectedItem();
+                        }
+                        answerLabel.setText("Ответ: " + selectedColor);
                     }
                 });
 
                 // Создаем панель для размещения элементов
                 JPanel panel = new JPanel();
-                panel.add(spinner);
+                panel.add(colorComboBox);
+                panel.add(customColorCheckBox);
+                panel.add(customColorTextField);
                 panel.add(answerButton);
                 panel.add(answerLabel);
 
