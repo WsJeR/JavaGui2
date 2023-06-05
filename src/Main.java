@@ -9,30 +9,33 @@ public class Main extends JDialog {
             @Override
             public void run() {
                 // Создаем окно
-                JFrame frame = new JFrame("Кликер");
+                JFrame frame = new JFrame("Выбор количества книг");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(300, 200);
 
-                // Создаем кнопку
-                JButton button = new JButton("Нажми меня!");
+                // Создаем надпись "Ответ"
+                JLabel answerLabel = new JLabel("Ответ:");
 
-                // Создаем надпись
-                JLabel label = new JLabel("Количество нажатий: 0");
+                // Создаем элемент JSpinner для выбора количества книг
+                SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
+                JSpinner spinner = new JSpinner(spinnerModel);
 
-                // Обработчик события нажатия на кнопку
-                button.addActionListener(new ActionListener() {
-                    int count = 0;
+                // Создаем кнопку "Ответить"
+                JButton answerButton = new JButton("Ответить");
 
+                // Обработчик события нажатия на кнопку "Ответить"
+                answerButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        count++;
-                        label.setText("Количество нажатий: " + count);
+                        int bookCount = (int) spinner.getValue();
+                        answerLabel.setText("Ответ: " + bookCount);
                     }
                 });
 
-                // Создаем панель для размещения кнопки и надписи
+                // Создаем панель для размещения элементов
                 JPanel panel = new JPanel();
-                panel.add(button);
-                panel.add(label);
+                panel.add(spinner);
+                panel.add(answerButton);
+                panel.add(answerLabel);
 
                 // Добавляем панель в окно
                 frame.getContentPane().add(panel);
