@@ -1,25 +1,21 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Input Dialog Example");
-        frame.setSize(300, 200);
+        int firstAnswer = JOptionPane.showConfirmDialog(null, "Вы любите программирование?", "Вопрос 1", JOptionPane.YES_NO_OPTION);
+        int secondAnswer = JOptionPane.showConfirmDialog(null, "Вы готовы изучать новые технологии?", "Вопрос 2", JOptionPane.YES_NO_OPTION);
 
-        JButton button = new JButton("Открыть диалоговое окно");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = JOptionPane.showInputDialog(frame, "Введите ваше имя:");
-                if (name != null && !name.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Ваше имя: " + name);
-                }
-            }
-        });
+        String result;
+        if (firstAnswer == JOptionPane.YES_OPTION && secondAnswer == JOptionPane.YES_OPTION) {
+            result = "Отлично, продолжайте развиваться!";
+        } else if (firstAnswer == JOptionPane.YES_OPTION && secondAnswer == JOptionPane.NO_OPTION) {
+            result = "Вы любите программирование, но не готовы изучать новые технологии.";
+        } else if (firstAnswer == JOptionPane.NO_OPTION && secondAnswer == JOptionPane.YES_OPTION) {
+            result = "Вы не любите программирование, но готовы изучать новые технологии.";
+        } else {
+            result = "Программирование и новые технологии не для вас.";
+        }
 
-        frame.getContentPane().add(button);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        JOptionPane.showMessageDialog(null, result, "Результат", JOptionPane.INFORMATION_MESSAGE);
     }
 }
