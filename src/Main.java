@@ -9,28 +9,25 @@ public class Main extends JDialog {
             @Override
             public void run() {
                 // Создаем окно
-                JFrame frame = new JFrame("Выбор цвета");
+                JFrame frame = new JFrame("Выбор времени года");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(300, 200);
 
                 // Создаем надпись "Ответ"
                 JLabel answerLabel = new JLabel("Ответ:");
 
-                // Создаем выпадающий список с названиями любимых цветов
-                String[] colors = {"Красный", "Зеленый", "Синий"};
-                JComboBox<String> colorComboBox = new JComboBox<>(colors);
+                // Создаем радиокнопки для выбора времени года
+                JRadioButton springRadioButton = new JRadioButton("Весна");
+                JRadioButton summerRadioButton = new JRadioButton("Лето");
+                JRadioButton autumnRadioButton = new JRadioButton("Осень");
+                JRadioButton winterRadioButton = new JRadioButton("Зима");
 
-                // Создаем чекбокс и текстовое поле для ввода своего цвета
-                JCheckBox customColorCheckBox = new JCheckBox("Свой цвет:");
-                JTextField customColorTextField = new JTextField(10);
-                customColorTextField.setEnabled(false);
-
-                // Обработчик события изменения состояния чекбокса
-                customColorCheckBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        customColorTextField.setEnabled(customColorCheckBox.isSelected());
-                    }
-                });
+                // Объединяем радиокнопки в одну группу
+                ButtonGroup seasonButtonGroup = new ButtonGroup();
+                seasonButtonGroup.add(springRadioButton);
+                seasonButtonGroup.add(summerRadioButton);
+                seasonButtonGroup.add(autumnRadioButton);
+                seasonButtonGroup.add(winterRadioButton);
 
                 // Создаем кнопку "Ответить"
                 JButton answerButton = new JButton("Ответить");
@@ -38,21 +35,28 @@ public class Main extends JDialog {
                 // Обработчик события нажатия на кнопку "Ответить"
                 answerButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        String selectedColor;
-                        if (customColorCheckBox.isSelected()) {
-                            selectedColor = customColorTextField.getText();
+                        String selectedSeason;
+                        if (springRadioButton.isSelected()) {
+                            selectedSeason = "Весна";
+                        } else if (summerRadioButton.isSelected()) {
+                            selectedSeason = "Лето";
+                        } else if (autumnRadioButton.isSelected()) {
+                            selectedSeason = "Осень";
+                        } else if (winterRadioButton.isSelected()) {
+                            selectedSeason = "Зима";
                         } else {
-                            selectedColor = (String) colorComboBox.getSelectedItem();
+                            selectedSeason = "Ничего не выбрано";
                         }
-                        answerLabel.setText("Ответ: " + selectedColor);
+                        answerLabel.setText("Ответ: " + selectedSeason);
                     }
                 });
 
                 // Создаем панель для размещения элементов
                 JPanel panel = new JPanel();
-                panel.add(colorComboBox);
-                panel.add(customColorCheckBox);
-                panel.add(customColorTextField);
+                panel.add(springRadioButton);
+                panel.add(summerRadioButton);
+                panel.add(autumnRadioButton);
+                panel.add(winterRadioButton);
                 panel.add(answerButton);
                 panel.add(answerLabel);
 
