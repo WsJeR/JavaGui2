@@ -9,56 +9,36 @@ public class Main extends JDialog {
             @Override
             public void run() {
                 // Создаем окно
-                JFrame frame = new JFrame("Выбор времени года");
+                JFrame frame = new JFrame("Запись строк");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(300, 200);
 
-                // Создаем надпись "Ответ"
-                JLabel answerLabel = new JLabel("Ответ:");
+                // Создаем JTextArea и добавляем в JScrollPane
+                JTextArea textArea = new JTextArea(10, 20);
+                JScrollPane scrollPane = new JScrollPane(textArea);
 
-                // Создаем радиокнопки для выбора времени года
-                JRadioButton springRadioButton = new JRadioButton("Весна");
-                JRadioButton summerRadioButton = new JRadioButton("Лето");
-                JRadioButton autumnRadioButton = new JRadioButton("Осень");
-                JRadioButton winterRadioButton = new JRadioButton("Зима");
+                // Создаем JTextField для ввода строки
+                JTextField textField = new JTextField(20);
 
-                // Объединяем радиокнопки в одну группу
-                ButtonGroup seasonButtonGroup = new ButtonGroup();
-                seasonButtonGroup.add(springRadioButton);
-                seasonButtonGroup.add(summerRadioButton);
-                seasonButtonGroup.add(autumnRadioButton);
-                seasonButtonGroup.add(winterRadioButton);
+                // Создаем кнопку "Записать"
+                JButton writeButton = new JButton("Записать");
 
-                // Создаем кнопку "Ответить"
-                JButton answerButton = new JButton("Ответить");
-
-                // Обработчик события нажатия на кнопку "Ответить"
-                answerButton.addActionListener(new ActionListener() {
+                // Обработчик события нажатия на кнопку "Записать"
+                writeButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        String selectedSeason;
-                        if (springRadioButton.isSelected()) {
-                            selectedSeason = "Весна";
-                        } else if (summerRadioButton.isSelected()) {
-                            selectedSeason = "Лето";
-                        } else if (autumnRadioButton.isSelected()) {
-                            selectedSeason = "Осень";
-                        } else if (winterRadioButton.isSelected()) {
-                            selectedSeason = "Зима";
-                        } else {
-                            selectedSeason = "Ничего не выбрано";
+                        String text = textField.getText();
+                        if (!text.isEmpty()) {
+                            textArea.append(text + "\n");
+                            textField.setText("");
                         }
-                        answerLabel.setText("Ответ: " + selectedSeason);
                     }
                 });
 
                 // Создаем панель для размещения элементов
                 JPanel panel = new JPanel();
-                panel.add(springRadioButton);
-                panel.add(summerRadioButton);
-                panel.add(autumnRadioButton);
-                panel.add(winterRadioButton);
-                panel.add(answerButton);
-                panel.add(answerLabel);
+                panel.add(textField);
+                panel.add(writeButton);
+                panel.add(scrollPane);
 
                 // Добавляем панель в окно
                 frame.getContentPane().add(panel);
